@@ -18,7 +18,7 @@ namespace Shared.Models
         public bool IsLeader { get; set; }
         public bool IsSpectator { get; set; }
         public List<NetWorthSnapshot> NetWorthSnapshots { get; set; }
-
+        public List<StashTabModel> StashTabs { get; set; }
         public ExtenedAreaInfoModel AreaInfo { get; set; }
         public List<ExtenedAreaInfoModel> PastAreas { get; set; }
 

@@ -14,7 +14,7 @@ import { NetWorthHistory, NetWorthItem, NetWorthSnapshot } from '../interfaces/i
 import { ItemPricing } from '../interfaces/item-pricing.interface';
 import { Item } from '../interfaces/item.interface';
 import { Player } from '../interfaces/player.interface';
-import { Stash } from '../interfaces/stash.interface';
+import { Stash, StashTab } from '../interfaces/stash.interface';
 import { AccountService } from './account.service';
 import { ExternalService } from './external.service';
 import { LogService } from './log.service';
@@ -32,6 +32,7 @@ export class IncomeService implements OnDestroy {
   private netWorthHistory: NetWorthHistory;
   private sessionId: string;
   private isSnapshotting = false;
+  private playerTabItems: StashTab[];
 
   public networthSnapshots: NetWorthSnapshot[] = [];
   public localPlayer: Player;
@@ -124,6 +125,7 @@ export class IncomeService implements OnDestroy {
         this.netWorthHistory.history.unshift(snapShot);
 
         const historyToSend = HistoryHelper.filterNetworth(this.netWorthHistory.history, oneDayAgo);
+        this.localPlayer.stashTabs = this.playerTabItems;
 
         this.accountService.player.next(this.localPlayer);
 
@@ -255,8 +257,20 @@ export class IncomeService implements OnDestroy {
       if (this.characterPricing) {
         this.PriceItems(this.localPlayer.character.items, mapTab, undefined);
       }
+      this.playerTabItems = [];
       this.playerStashTabs.forEach((tab: Stash, tabIndex: number) => {
         if (tab !== null) {
+
+          // if the retrieved tab is selected, include items from tab on playerobject
+          const selectedTab = selectedStashTabs.find(x => x.position === tabIndex);
+          if (selectedTab !== undefined) {
+            this.playerTabItems.push({
+              items: tab.items,
+              index: tabIndex,
+              name: selectedTab.name
+            } as StashTab);
+          }
+
           this.PriceItems(tab.items, mapTab, tab.mapLayout);
         }
       });

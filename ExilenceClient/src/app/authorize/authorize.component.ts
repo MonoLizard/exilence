@@ -14,6 +14,7 @@ import { MessageValueService } from '../shared/providers/message-value.service';
 import { PartyService } from '../shared/providers/party.service';
 import { SettingsService } from '../shared/providers/settings.service';
 import { ServerMessageDialogComponent } from './components/server-message-dialog/server-message-dialog.component';
+import { StashService } from '../shared/providers/stash.service';
 
 @Component({
   selector: 'app-authorize',
@@ -35,6 +36,7 @@ export class AuthorizeComponent implements OnInit, OnDestroy {
     private incomeService: IncomeService,
     public electronService: ElectronService,
     private settingsService: SettingsService,
+    private stashService: StashService,
     private dialog: MatDialog,
     private router: Router) {
     this.form = fb.group({
@@ -54,6 +56,7 @@ export class AuthorizeComponent implements OnInit, OnDestroy {
         this.partyService.serverMessageReceived.next(undefined);
       }
     });
+    this.stashService.getStashTabList();
   }
 
   openServerMsgDialog(data: ServerMessage): void {

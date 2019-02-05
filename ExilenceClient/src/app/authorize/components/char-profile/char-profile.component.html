@@ -6,6 +6,12 @@
                 Equipment
             </ng-template>
         </mat-tab>
+        <mat-tab #stashTab id="stashTab" [disabled]="localProfile">
+            <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">view_module</mat-icon>
+                Stash
+            </ng-template>
+        </mat-tab>
     </mat-tab-group>
 </div>
 
@@ -13,5 +19,10 @@
 <div class="tab-content down-scale-inventory" *ngIf="player?.character?.items" [hidden]="selectedIndex != 0">
     <app-char-equipment #charEquipment [items]="player?.character?.items"></app-char-equipment>
     <button mat-raised-button color="primary" (click)="goToProfile()" class="profile-link" type="button">Go to profile</button>
-    <app-char-inventory [topMargin]="-2" [items]="player?.character?.items"></app-char-inventory>
+    <app-char-inventory [topMargin]="-2" [items]="player?.character?.items" inventoryWidth="12" inventoryHeight="5"></app-char-inventory>
+</div>
+
+<!-- tab STASH -->
+<div class="tab-content" [hidden]="selectedIndex != 1 || localProfile">
+    <app-char-stash *ngIf="!localProfile" [player]="player"></app-char-stash>
 </div>

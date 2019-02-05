@@ -22,6 +22,7 @@ import { FaqModule } from './faq/faq.module';
 import { InspectPlayersModule } from './inspect-players/inspect-players.module';
 import { PartyModule } from './party/party.module';
 import { SettingsModule } from './settings/settings.module';
+import { StashService } from '../shared/providers/stash.service';
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import { SettingsModule } from './settings/settings.module';
     MessageValueService,
     PricingService,
     IncomeService,
-    AnalyticsService
+    AnalyticsService,
+    StashService
   ],
   entryComponents: [ServerMessageDialogComponent]
 })

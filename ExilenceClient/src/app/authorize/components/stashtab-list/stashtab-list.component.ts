@@ -9,6 +9,7 @@ import { ExternalService } from '../../../shared/providers/external.service';
 import { PartyService } from '../../../shared/providers/party.service';
 import { SettingsService } from '../../../shared/providers/settings.service';
 import { MaptabInfoDialogComponent } from './maptab-info-dialog/maptab-info-dialog.component';
+import { StashService } from '../../../shared/providers/stash.service';
 
 @Component({
   selector: 'app-stashtab-list',
@@ -27,13 +28,20 @@ export class StashtabListComponent implements OnInit, OnDestroy {
 
   selection = new SelectionModel<any>(true, []);
   private stashTabSub: Subscription;
+  private stash: Stash;
   constructor(
     private settingsService: SettingsService,
     private externalService: ExternalService,
     private partyService: PartyService,
     private alertService: AlertService,
+    private stashService: StashService,
     private maptabDialog: MatDialog
-  ) { }
+  ) {
+    this.stashService.stash.subscribe(res => {
+      this.stash = res;
+      this.init();
+    });
+   }
 
   ngOnInit() {
     // temporarily until implemented

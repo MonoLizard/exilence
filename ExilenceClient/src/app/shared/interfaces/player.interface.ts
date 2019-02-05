@@ -1,6 +1,7 @@
 import { ExtendedAreaInfo } from './area.interface';
 import { Character } from './character.interface';
 import { NetWorthSnapshot } from './income.interface';
+import { StashTab } from './stash.interface';
 
 export interface Player {
     connectionID: string;
@@ -20,6 +21,7 @@ export interface Player {
     areaInfo: ExtendedAreaInfo;
     pastAreas: ExtendedAreaInfo[];
     ladderInfo: LadderPlayer[];
+    stashTabs: StashTab[];
 }
 
 export interface RecentPlayer {
